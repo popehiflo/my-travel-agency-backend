@@ -1,0 +1,12 @@
+{
+  "name": "my-travel-agency-backend",
+  "version": "1.0.0",
+  "description": "My Travel Agency is a travel/tour-operator app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "popehiflo",
+  "license": "ISC"
+}

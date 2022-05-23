@@ -1,5 +1,8 @@
+const { getAllUser } = require('./user.service');
+
 function handleAllUsers(req, res) {
-  res.json({msg:'Hi!! ✌ response (controller) to users GET /'});
+  const users = getAllUser();
+  res.json(users);
 }
 
 module.exports = {

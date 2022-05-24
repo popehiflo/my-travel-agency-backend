@@ -7,6 +7,13 @@ const UserSchema = Schema({
     trim: true,
     lowercase: true,
   },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    lowercase: true,
+  },
   email: {
     type: String,
     required: true,
@@ -30,6 +37,7 @@ const UserSchema = Schema({
     type: String,
     required: true,
     default: "TOURIST",
+    enum: ['ADMIN', 'OPERATOR', 'TOURIST'],
   },
   isAdmin: {
     type: Boolean,

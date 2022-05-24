@@ -1,8 +1,18 @@
 const UserModel = require('./user.model');
 
-async function getAllUser() {
-  const users = await UserModel.find();
-  return users;
+// async function getAllUser() {
+//   const users = await UserModel.find();
+//   return users;
+// }
+
+async function getAllUser(limit) {
+  if (limit) {
+    const users = await UserModel.find().sort({_id: -1}).limit(limit);
+    return users;
+  } else {
+    const users = await UserModel.find()
+    return users;
+  }
 }
 
 async function getOneUser(id) {

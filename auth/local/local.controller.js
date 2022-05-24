@@ -1,5 +1,6 @@
 const UserModel = require("../../api/user/user.model");
 const CryptoJS = require("crypto-js");
+const JWT = require("jsonwebtoken");
 
 async function handlerSignUpUser(req, res) {
   const newUser = new UserModel({
@@ -48,10 +49,21 @@ async function handlerSignInUser(req, res) {
       return res.status(401).json("Wrong email or password");
     }
 
-     // no se debe devolver el password
+    const accessToken = JWT.sign(
+    {
+      id: user._id,
+      isAdmin: user.isAdmin,
+      role: user.role,
+    },
+    process.env.JWT_SECRET_KEY,
+    { 
+      expiresIn:"3d"
+    }
+    );
+
+    // no se debe devolver el password
     const { password, ...userWithoutPassword } = user.toObject();
-    // res.status(200).json({...others, accessToken});
-    res.status(200).json(userWithoutPassword);
+    res.status(200).json({...userWithoutPassword, accessToken});
 
   } catch(err){
     res.status(500).json(err);

@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 const UserSchema = Schema({
-  fullName: {
+  fullname: {
     type: String,
     required: true,
     trim: true,
@@ -9,10 +9,6 @@ const UserSchema = Schema({
   },
   username: {
     type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    lowercase: true,
   },
   email: {
     type: String,
@@ -35,9 +31,9 @@ const UserSchema = Schema({
   },
   role: {
     type: String,
-    required: true,
-    default: "TOURIST",
     enum: ['ADMIN', 'OPERATOR', 'TOURIST'],
+    default: "TOURIST",
+    required: true,
   },
   isAdmin: {
     type: Boolean,

@@ -35,10 +35,6 @@ const TourSchema = Schema({
   },
   itinerary: [
     {
-      id: {
-        type: String,
-        required: true,
-      },
       day: {
         type: Number,
       },
@@ -50,8 +46,12 @@ const TourSchema = Schema({
       },
     }
   ],
-  banner: true,
-  popular: true,
+  banner: {
+    type: Boolean,
+  },
+  popular: {
+    type: Boolean,
+  },
   price: {
     type: Number,
     required: true,

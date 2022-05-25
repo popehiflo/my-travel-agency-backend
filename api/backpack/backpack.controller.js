@@ -1,5 +1,23 @@
 const BackpackModel = require('./backpack.model');
 
+async function handlerAllBackpacks(req, res) {
+  try {
+    const backpacks = await BackpackModel.find();
+    res.status(200).json(backpacks);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
+async function handlerOneBackpack(req, res) {
+  try {
+    const backpack = await BackpackModel.findOne({ userId: req.params.userId });
+    res.status(200).json(backpack);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
 async function handlerCreateBackpack(req, res) {
   const newBackpack = new BackpackModel(req.body);
 
@@ -36,6 +54,8 @@ async function handlerDeleteBackpack(req, res) {
 }
 
 module.exports = {
+  handlerAllBackpacks,
+  handlerOneBackpack,
   handlerCreateBackpack,
   handlerUpdateBackpack,
   handlerDeleteBackpack,

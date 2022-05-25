@@ -35,7 +35,33 @@ async function handlerCreateTour(req, res) {
   }
 }
 
+async function handlerUpdateTour(req, res) {
+  try {
+    const updatedTour = await TourModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedTour);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
+async function handlerDeleteTour(req, res) {
+  try {
+    await TourModel.findByIdAndDelete(req.params.id);
+    res.status(200).json("Tour has been deleted...");
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
 module.exports = {
   handlerAllTours,
   handlerCreateTour,
+  handlerUpdateTour,
+  handlerDeleteTour,
 };

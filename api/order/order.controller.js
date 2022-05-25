@@ -1,5 +1,15 @@
 const OrderModel = require('./order.model');
 
+// Get user orders
+async function handlerGetUserOrders(req, res) {
+  try {
+    const orders = await OrderModel.find({ userId: req.params.userId });
+    res.status(200).json(orders);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
 async function handlerCreateOrder(req, res) {
   const newOrder = new OrderModel(req.body);
 
@@ -36,6 +46,7 @@ async function handlerDeleteOrder(req, res) {
 }
 
 module.exports = {
+  handlerGetUserOrders,
   handlerCreateOrder,
   handlerUpdateOrder,
   handlerDeleteOrder,

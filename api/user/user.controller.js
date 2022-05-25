@@ -1,4 +1,4 @@
-const userModel = require('./user.model');
+const UserModel = require('./user.model');
 const {
   getAllUser,
   getOneUser,
@@ -8,8 +8,15 @@ const {
 } = require('./user.service');
 
 async function handlerAllUser(req, res) {
-  const users = await getAllUser();
-  res.json(users);
+  const query = req.query.new;
+  try {
+    const users = query
+      ? await getAllUser(5)
+      : await getAllUser();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 }
 
 async function handlerOneUser(req, res) {
@@ -77,10 +84,35 @@ async function handlerDeleteUser(req, res) {
   }
 }
 
+async function handlerStatsUser(req, res) {
+  const date = new Date();
+  const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
+  try {
+    const data = await UserModel.aggregate([
+      { $match: { createdAt: { $gte: lastYear } } },
+      {
+        $project: {
+          month: { $month: "$createdAt" },
+        },
+      },
+      {
+        $group: {
+          _id: "$month",
+          total: { $sum: 1 },
+        },
+      },
+    ]);
+    res.status(200).json(data)
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
 module.exports = {
   handlerAllUser,
   handlerOneUser,
   handlerCreateUser,
   handlerUpdateUser,
   handlerDeleteUser,
+  handlerStatsUser,
 };

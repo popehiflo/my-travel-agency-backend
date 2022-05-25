@@ -24,6 +24,15 @@ async function handlerAllTours(req, res) {
   }
 };
 
+async function handlerOneTour(req, res) {
+  try {
+    const tour = await TourModel.findById(req.params.id);
+    res.status(200).json(tour);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
 async function handlerCreateTour(req, res) {
   const newTour = new TourModel(req.body);
 
@@ -61,6 +70,7 @@ async function handlerDeleteTour(req, res) {
 
 module.exports = {
   handlerAllTours,
+  handlerOneTour,
   handlerCreateTour,
   handlerUpdateTour,
   handlerDeleteTour,

@@ -26,7 +26,17 @@ async function handlerUpdateBackpack(req, res) {
   }
 }
 
+async function handlerDeleteBackpack(req, res) {
+  try {
+    await BackpackModel.findByIdAndDelete(req.params.id);
+    res.status(200).json("Backpack has been deleted...");
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
 module.exports = {
   handlerCreateBackpack,
   handlerUpdateBackpack,
+  handlerDeleteBackpack,
 };

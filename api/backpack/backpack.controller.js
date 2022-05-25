@@ -11,6 +11,22 @@ async function handlerCreateBackpack(req, res) {
   }
 }
 
+async function handlerUpdateBackpack(req, res) {
+  try {
+    const updatedBackpack = await BackpackModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedBackpack);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
 module.exports = {
   handlerCreateBackpack,
+  handlerUpdateBackpack,
 };

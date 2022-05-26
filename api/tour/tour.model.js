@@ -33,6 +33,12 @@ const TourSchema = Schema({
     type: Number,
     required: true,
   },
+  level: {
+    type: Array,
+  },
+  country: {
+    type: Array,
+  },
   itinerary: [
     {
       day: {
